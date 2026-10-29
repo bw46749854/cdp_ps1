@@ -1,0 +1,54 @@
+﻿/* Mock 共通スタイル。各画面固有のスタイルは画面ごとの style.css に置く。 */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: "Segoe UI", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+.mock-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 8px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    opacity: 0.85;
+}
+
+.mock-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    padding: 10px 18px;
+    border-radius: 6px;
+    background: #1f2937;
+    color: #f9fafb;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+}

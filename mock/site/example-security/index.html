@@ -1,0 +1,103 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>センサー | デバイス (既定グループ) - ExampleSecurity Cloud Service</title>
+<link rel="stylesheet" href="../assets/mock.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!--
+    DOM契約（main/dom/features/device-list-export, scan-target-sync）が参照する要素:
+    #viewport / [data-components="sidenav-item-devices"] / span[data-label][data-id="1"]
+    操作ボタン（.ui-dropdown.ui-btn-group）/ 「センサー: <件数>」/ input#searchBox
+    DataTable__table-- 配下の DataTable__row / DataTable__header / DataTable__cell
+    「端末共通」グループ内の「手動スキャンの開始」メニュー
+-->
+<div id="viewport">
+    <header class="es-topbar">
+        <div class="es-brand">
+            <span class="es-logo" aria-hidden="true"></span>
+            ExampleSecurity <span class="es-brand-sub">Cloud Service</span>
+        </div>
+        <span class="mock-badge">MOCK</span>
+        <div class="es-account">admin@example.test</div>
+    </header>
+
+    <div class="es-body">
+        <nav class="es-sidenav" aria-label="メインメニュー">
+            <a class="es-nav-item" href="#" data-components="sidenav-item-dashboard">ダッシュボード</a>
+            <a class="es-nav-item is-active" href="#" data-components="sidenav-item-devices" title="センサー">センサー</a>
+            <a class="es-nav-item" href="#" data-components="sidenav-item-policies">ポリシー</a>
+            <a class="es-nav-item" href="#" data-components="sidenav-item-reports">レポート</a>
+            <a class="es-nav-item" href="#" data-components="sidenav-item-admin">管理</a>
+        </nav>
+
+        <aside class="es-groups">
+            <div class="es-groups-title">グループ</div>
+            <ul class="es-tree" role="tree">
+                <li class="es-tree-item is-active" role="treeitem" aria-selected="true">
+                    <span data-label="true" data-id="1">デバイス (既定グループ)</span>
+                </li>
+                <li class="es-tree-item" role="treeitem" aria-selected="false">
+                    <span data-label="true" data-id="2">サーバー</span>
+                </li>
+                <li class="es-tree-item" role="treeitem" aria-selected="false">
+                    <span data-label="true" data-id="3">検証用</span>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="es-main">
+            <div class="es-breadcrumb">センサー <span aria-hidden="true">›</span> デバイス (既定グループ)</div>
+            <h1 class="es-page-title">デバイス (既定グループ)</h1>
+
+            <div class="es-toolbar">
+                <div class="ui-dropdown ui-btn-group" data-menu="task">
+                    <button type="button" class="es-btn dropdown-toggle" aria-haspopup="true" aria-expanded="false">操作</button>
+                    <div class="ui-dropdown-menu" role="menu" hidden>
+                        <div class="ui-menu-item-wrapper" role="presentation">
+                            <div class="es-menu-item" role="menuitem" data-action="export">CSV出力</div>
+                        </div>
+                        <div class="ui-menu-item-wrapper" role="presentation">
+                            <div class="es-menu-item" role="menuitem" data-action="none">グループへ移動</div>
+                        </div>
+                        <div class="ui-menu-item-wrapper" role="presentation">
+                            <div class="es-menu-item" role="menuitem" data-action="none">ポリシーの再配信</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-dropdown" data-menu="scan">
+                    <button type="button" class="es-btn dropdown-toggle" aria-haspopup="true" aria-expanded="false">スキャン</button>
+                    <div class="ui-dropdown-menu" role="menu" hidden>
+                        <div class="es-menu-group">端末共通</div>
+                        <div class="ui-menu-item-wrapper" role="presentation">
+                            <div class="es-menu-item" role="menuitem" data-action="scan" aria-disabled="true">手動スキャンの開始</div>
+                        </div>
+                        <div class="ui-menu-item-wrapper" role="presentation">
+                            <div class="es-menu-item" role="menuitem" data-action="none" aria-disabled="true">手動スキャンの停止</div>
+                        </div>
+                    </div>
+                </div>
+
+                <input id="searchBox" name="searchBox" class="es-search" type="search" placeholder="ホスト名で絞り込み" autocomplete="off">
+
+                <div class="es-count"><span id="device-count">センサー: 0</span></div>
+            </div>
+
+            <div class="es-table-scroll" id="device-scroll">
+                <div class="DataTable__table--main" id="device-table" role="grid"></div>
+            </div>
+
+            <p class="es-note">架空のデータです。チェックした端末は「スキャン」メニューの「手動スキャンの開始」の対象になります。</p>
+        </main>
+    </div>
+</div>
+
+<div class="mock-toast" id="toast" role="status" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>

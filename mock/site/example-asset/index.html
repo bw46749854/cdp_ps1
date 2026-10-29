@@ -1,0 +1,159 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>端末一覧 - ExampleAsset</title>
+<link rel="stylesheet" href="../assets/mock.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!--
+    DOM契約（main/dom/features/installed-app-export）が参照する要素:
+    #contents.asset / #breadcrumb-panel「端末一覧」/ [ng-bind="assetList.totalCount"]
+    固定列側: #asset-grid_headers_fixed（th#asset-grid___selector__, th#asset-grid_asset_name「端末名」）
+              #asset-grid_fixedBodyContainer > #asset-grid_fixed tbody tr[data-id] > td[aria-describedby="asset-grid_asset_name"]
+    通常列側: #asset-grid_headers / #asset-grid_scroll > #asset-grid tbody tr[data-id]
+    #detail-panel（.title-text[ng-bind="detail.item.name"] / nav ul.nav.navbar-nav / .app-pane）
+-->
+<header class="ea-header">
+    <div class="ea-brand">ExampleAsset <span class="ea-brand-sub">資産管理</span></div>
+    <span class="mock-badge">MOCK</span>
+    <div class="ea-user">管理者</div>
+</header>
+
+<div class="ea-layout">
+    <nav class="ea-menu" aria-label="資産メニュー">
+        <a class="ea-menu-item is-active" href="#">端末</a>
+        <a class="ea-menu-item" href="#">パッチ</a>
+        <a class="ea-menu-item" href="#">ライセンス</a>
+        <a class="ea-menu-item" href="#">レポート</a>
+    </nav>
+
+    <div id="contents" class="asset">
+        <div id="breadcrumb-panel">
+            <ol class="breadcrumb">
+                <li>ホーム</li>
+                <li>資産</li>
+                <li>端末一覧</li>
+            </ol>
+        </div>
+
+        <div class="ea-list-head">
+            <h1 class="page-title">端末一覧</h1>
+            <div class="ea-count">表示件数 <span ng-bind="assetList.totalCount">0</span> 件</div>
+        </div>
+
+        <div id="asset-grid_container" class="ea-grid">
+            <div class="ea-grid-row">
+                <div class="ea-fixed-side">
+                    <table id="asset-grid_headers_fixed" class="ea-grid-table" role="grid">
+                        <colgroup><col class="col-select"><col class="col-name"></colgroup>
+                        <thead>
+                            <tr data-header-row role="row">
+                                <th id="asset-grid___selector__" role="columnheader">
+                                    <span id="asset-grid_all_select"><input type="checkbox" aria-label="すべて選択"></span>
+                                </th>
+                                <th id="asset-grid_asset_name" role="columnheader" aria-label="端末名"><span class="ui-iggrid-headertext">端末名</span></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="ea-main-side ea-main-head">
+                    <table id="asset-grid_headers" class="ea-grid-table" role="grid">
+                        <colgroup><col class="col-os"><col class="col-user"><col class="col-ip"><col class="col-seen"></colgroup>
+                        <thead>
+                            <tr data-header-row role="row">
+                                <th id="asset-grid_os" role="columnheader" aria-label="OS"><span class="ui-iggrid-headertext">OS</span></th>
+                                <th id="asset-grid_user" role="columnheader" aria-label="利用者"><span class="ui-iggrid-headertext">利用者</span></th>
+                                <th id="asset-grid_ip" role="columnheader" aria-label="IPアドレス"><span class="ui-iggrid-headertext">IPアドレス</span></th>
+                                <th id="asset-grid_last_seen" role="columnheader" aria-label="最終通信日時"><span class="ui-iggrid-headertext">最終通信日時</span></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="ea-grid-row">
+                <div id="asset-grid_fixedBodyContainer" class="ea-fixed-side ea-body">
+                    <table id="asset-grid_fixed" class="ea-grid-table" role="grid">
+                        <colgroup><col class="col-select"><col class="col-name"></colgroup>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="asset-grid_scroll" class="ea-main-side ea-body ui-iggrid-scrolldiv">
+                    <table id="asset-grid" class="ea-grid-table" role="grid">
+                        <colgroup><col class="col-os"><col class="col-user"><col class="col-ip"><col class="col-seen"></colgroup>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <p class="ea-note">架空のデータです。端末名をクリックすると右側に詳細パネルが開きます。</p>
+    </div>
+</div>
+
+<aside id="detail-panel" hidden>
+    <div class="ea-panel-head">
+        <span class="title-text" ng-bind="detail.item.name"></span>
+        <div class="panel-close">
+            <button type="button" class="close-btn" ng-click="detail.close()" aria-label="閉じる">×</button>
+        </div>
+    </div>
+
+    <nav class="ea-tabs">
+        <ul class="nav navbar-nav">
+            <li data-tab="summary"><button type="button"><span ng-bind="tab.label">概要</span></button></li>
+            <li data-tab="apps"><button type="button"><span ng-bind="tab.label">インストール済みアプリ</span></button></li>
+            <li data-tab="network"><button type="button"><span ng-bind="tab.label">ネットワーク</span></button></li>
+        </ul>
+    </nav>
+
+    <section class="ea-tab-body" data-tab-body="summary">
+        <dl class="ea-props" id="summary-props"></dl>
+    </section>
+
+    <section class="ea-tab-body app-pane" data-tab-body="apps">
+        <div class="ea-radio-group" role="radiogroup">
+            <input type="radio" id="app-list-radio" name="app-view" value="apps" checked>
+            <label for="app-list-radio">インストール済みアプリ</label>
+            <input type="radio" id="update-list-radio" name="app-view" value="updates">
+            <label for="update-list-radio">更新プログラム</label>
+        </div>
+
+        <div class="ea-app-grid">
+            <table id="app-grid_headers" class="ea-grid-table">
+                <colgroup><col class="col-app"><col class="col-ver"><col class="col-pub"><col class="col-date"></colgroup>
+                <thead>
+                    <tr>
+                        <th aria-label="アプリ名"><span class="ui-iggrid-headertext">アプリ名</span></th>
+                        <th aria-label="バージョン"><span class="ui-iggrid-headertext">バージョン</span></th>
+                        <th aria-label="発行元"><span class="ui-iggrid-headertext">発行元</span></th>
+                        <th aria-label="導入日"><span class="ui-iggrid-headertext">導入日</span></th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="ea-app-scroll">
+                <table id="app-grid" class="ea-grid-table">
+                    <colgroup><col class="col-app"><col class="col-ver"><col class="col-pub"><col class="col-date"></colgroup>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="ea-csv" data-download-url="detail.csvUrl['app']" data-before-download="detail.beforeAppCsv(param)">
+            <button type="button" class="ea-btn">CSV出力</button>
+        </div>
+    </section>
+
+    <section class="ea-tab-body" data-tab-body="network">
+        <dl class="ea-props" id="network-props"></dl>
+    </section>
+</aside>
+
+<div class="mock-toast" id="toast" role="status" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
